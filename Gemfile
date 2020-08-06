@@ -23,6 +23,8 @@ gem "bulma-rails", "~> 0.9.0"
 gem 'simple_form'
 # Use Devise for authentication
 gem 'devise'
+# Use Font Awesome icon helpers
+gem 'font-awesome-rails'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
