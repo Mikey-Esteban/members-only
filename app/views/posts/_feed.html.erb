@@ -21,7 +21,7 @@
         <div class="media-content">
           <div class="content">
             <p>
-              <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
+              <strong><%= post.member.name %></strong> <small>@<%= post.member.username %></small> <small><%= post.updated_at.to_date.to_s %></small>
               <br>
               <%= post.message %>
             </p>
