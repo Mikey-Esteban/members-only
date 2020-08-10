@@ -1,0 +1,11 @@
+var postId = '<%= @post.id %>';
+
+function toggleLikeButton(postId, innerHTML) {
+  let likeButton = document.querySelector(`.like-icon[data-id='${postId}']`)
+  let svgButton = likeButton.querySelector("svg")
+  let el = svgButton['dataset']['prefix']
+
+  el == 'fas' ? svgButton.setAttribute("data-prefix", 'far') : svgButton.setAttribute("data-prefix", 'fas')
+}
+
+toggleLikeButton(postId);

@@ -13,8 +13,17 @@
  *= require_tree .
  *= require_self
  */
+
+ $tabs-link-hover-color: hsl(171, 100%, 41%);
+ $tabs-link-hover-border-bottom-color: hsl(171, 100%, 41%);
+ $button-border-color: none;
+ $button-hover-border-color: none;
+ $button-hover-color: hsl(171, 100%, 41%);
+
  @import "bulma";
  @import "font-awesome";
+
+
 
 .navbar-menu {
   font-size: small;
@@ -22,4 +31,11 @@
 
 .notification:not(:last-child) {
   margin-bottom: 0;
+}
+
+.dropdown-content {
+  color:black;
+}
+.comment-box {
+  margin-left: 5px;
 }

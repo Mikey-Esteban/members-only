@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_06_160747) do
+ActiveRecord::Schema.define(version: 2020_08_07_133333) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "comments", force: :cascade do |t|
+    t.string "commenter"
+    t.text "body"
+    t.bigint "member_id", null: false
+    t.bigint "post_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["member_id"], name: "index_comments_on_member_id"
+    t.index ["post_id"], name: "index_comments_on_post_id"
+  end
 
   create_table "favorites", force: :cascade do |t|
     t.string "favoritable_type", null: false
@@ -54,4 +65,6 @@ ActiveRecord::Schema.define(version: 2020_08_06_160747) do
     t.integer "member_id"
   end
 
+  add_foreign_key "comments", "members"
+  add_foreign_key "comments", "posts"
 end

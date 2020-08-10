@@ -2,16 +2,25 @@ class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_member!, except: [:index, :show]
 
+  def toggle_favorite
+    @post = Post.find_by(id: params[:id])
+    current_member.favorited?(@post) ? current_member.unfavorite(@post) : current_member.favorite(@post)
+  end
+
   # GET /posts
   # GET /posts.json
   def index
     @posts = Post.all.order("created_at DESC")
     @post = Post.new
+
+    @comment = current_member.comments.build if member_signed_in?
+    # @comment.post_id = @post.id
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @post = Post.find(params[:id])
   end
 
   # GET /posts/new

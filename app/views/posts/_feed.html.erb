@@ -8,6 +8,8 @@
     <div class="media-content">
       <%= render 'form' %><br>
     </div>
+    <div class="tabs">
+</div>
   </article>
 
   <% @posts.each do |post|  %>
@@ -20,83 +22,102 @@
         </div>
         <div class="media-content">
           <div class="content">
-            <p>
-              <strong><%= post.member.name %></strong> <small>@<%= post.member.username %></small> <small><%= post.updated_at.to_date.to_s %></small>
+            <div>
+              <% if member_signed_in? %>
+                <strong><%= post.member.name %></strong> <small>@<%= post.member.username %></small> <small><%= post.updated_at.to_date.to_s %></small>
+              <% else %>
+                <strong>Anonymous</strong>
+              <% end %>
               <br>
               <%= post.message %>
-            </p>
+            </div>
+            <div class="tabs is-right">
+              <ul>
+                <li><a>likes</a></li>
+                <li><a href="posts/<%= post.id %>/comments"><%= post.comments.size %> comments</a></li>
+              </ul>
+            </div>
           </div>
           <nav class="level is-mobile">
-            <div class="level-left">
-              <a class="level-item post-buttons" aria-label="reply">
-                <span class="icon is-small">
-                  <i class="fas fa-reply" aria-hidden="true"></i>
-                </span>
-              </a>
-              <a class="level-item post-buttons" aria-label="retweet">
-                <span class="icon is-small">
-                  <i class="fas fa-retweet" aria-hidden="true"></i>
-                </span>
-              </a>
-              <a class="level-item post-buttons" aria-label="like">
-                <span class="icon is-small">
-                  <i class="fas fa-heart" aria-hidden="true"></i>
-                </span>
-              </a>
-            </div>
-            <div class="level-right">
-              <a class="level-item post-buttons" href="<%= edit_post_path(post) %>" aria-label="like">
-                <span class="icon is-small">
-                  <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                </span>
-              </a>
+            <% if member_signed_in? %>
+              <div class="level-left">
+                <%= link_to toggle_favorite_post_path(post), method: :post, remote: true, :class => "level-item post-buttons" do %>
+                  <div class="like-icon" data-id="<%= post.id %>">
+                    <i class="<%= current_member.favorited?(post) ? 'fas' : 'far' %> fa-heart"></i>
+                  </div>
+                <% end %>
 
-              <%= link_to post_path(post), method: :delete, :class => "level-item post-buttons" do %>
-                <i class="fas fa-trash-alt" aria-hidden="true"></i>
-              <% end %>
+                <div class="dropdown is-hoverable">
+                  <div class="dropdown-trigger">
+                    <a class="comment-button level-item post-buttons" aria-haspopup="true" aria-controls="dropdown-menu2">
+                      <!-- <span>Content</span> -->
+                      <span class="icon is-small">
+                        <i class="far fa-comment" aria-hidden="true"></i>
+                      </span>
+                    </a>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                    <div class="dropdown-content">
+                      <div class="notification">
+                        <%= simple_form_for [post, post.comments.build], namespace: post.id do |f| %>
+                          <%= f.error_notification %>
+                          <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
-            </div>
+                          <div class="field">
+                            <div class="control">
+                              <%= f.input :body, label: "Leave a comment", input_html: { class: "textarea" }, wrapper: false,
+                                label_html: { class: "label" }, placeholder: "That's so fetch..." %>
+                            </div>
+                            <br>
+                            <%= f.button :submit, 'Post!', class: "button is-primary is-small" %>
+                          </div>
+                        <% end %>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="dropdown comment-box">
+                  <div class="dropdown-trigger">
+                    <button class="button comment-button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
+                      <span>View Comments</span>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      <% post.comments.each do |comment| %>
+                      <a href="#" class="dropdown-item">
+                        <%= comment.body %>
+                      </a>
+                      <% end %>
+                      <hr class="dropdown-divider">
+                      <a href="<%= new_member_registration_path %>" class="dropdown-item button is-primary is-outlined">
+                        Sign up to know who says what!
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="level-right">
+                <a class="level-item post-buttons" href="<%= edit_post_path(post) %>" aria-label="like">
+                  <span class="icon is-small">
+                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                  </span>
+                </a>
+                <%= link_to post_path(post), method: :delete, :class => "level-item post-buttons" do %>
+                  <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                <% end %>
+              </div>
+            <% else %>
+              <div class="level-left">
+                <a class="button is-primary is-outlined is-small" href="<%= new_member_registration_path %>">Sign up to know who says what!</a>
+              </div>
+            <% end %>
           </nav>
+
+
         </div>
       </article>
     </div>
   <% end %>
-
-  <div class="box">
-    <article class="media">
-      <div class="media-left">
-        <figure class="image is-64x64">
-          <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Image">
-        </figure>
-      </div>
-      <div class="media-content">
-        <div class="content">
-          <p>
-            <strong>John Smith</strong> <small>@johnsmith</small> <small>31m</small>
-            <br>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean efficitur sit amet massa fringilla egestas. Nullam condimentum luctus turpis.
-          </p>
-        </div>
-        <nav class="level is-mobile">
-          <div class="level-left">
-            <a class="level-item post-buttons" aria-label="reply">
-              <span class="icon is-small">
-                <i class="fas fa-reply" aria-hidden="true"></i>
-              </span>
-            </a>
-            <a class="level-item post-buttons" aria-label="retweet">
-              <span class="icon is-small">
-                <i class="fas fa-retweet" aria-hidden="true"></i>
-              </span>
-            </a>
-            <a class="level-item post-buttons" aria-label="like">
-              <span class="icon is-small">
-                <i class="fas fa-heart" aria-hidden="true"></i>
-              </span>
-            </a>
-          </div>
-        </nav>
-      </div>
-    </article>
-  </div>
 </div>

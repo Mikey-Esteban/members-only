@@ -1,0 +1,20 @@
+
+<div class="section">
+  <div class="columns is-centered">
+    <div class="column is-6">
+      <% @post.comments.each do |comment| %>
+        <div class="notification is-primary">
+          <button class="delete"></button>
+          <h4 class="title is-5"><%= comment.member.name %> said <em><%= comment.body %></em></h4>
+          <blockquote class="blockquote mb-0">
+            <footer class="blockquote-footer">Posted <%= distance_of_time_in_words(comment.post.created_at, comment.created_at) %> later</footer>
+          </blockquote>
+          <% if member_signed_in? %>
+            <%= link_to 'Delete', "/posts/#{comment.post_id}/comments/#{comment.id}", method: :delete, data: { confirm: 'Really delete comment?' } %>
+          <% end %>
+        </div>
+        <br>
+      <% end %>
+    </div>
+  </div>
+</div>
