@@ -1,12 +1,12 @@
 <div class="section">
   <div class="columns is-centered">
-    <div class="column is-6">
+    <div class="column is-8">
+      <h3 class="title is-6"><%= @post.comments.size %> Comments</h3>
       <% @post.comments.each do |comment| %>
         <div class="notification is-primary">
-          <button class="delete"></button>
-          <h4 class="title is-5"><%= comment.member.name %> said <em><%= comment.body %></em></h4>
+          <h4 class="subtitle is-6"><%= member_signed_in? ? comment.member.name : 'Anon' %> said <em><%= comment.body %></em></h4>
           <blockquote class="blockquote mb-0">
-            <footer class="blockquote-footer">Posted <%= distance_of_time_in_words(comment.post.created_at, comment.created_at) %> later</footer>
+            <footer class="blockquote-footer"><small>Posted <%= time_ago_in_words(Time.now, comment.created_at) %> ago</small></footer>
           </blockquote>
           <% if member_signed_in? %>
             <%= link_to 'Delete', "/posts/#{comment.post_id}/comments/#{comment.id}", method: :delete, data: { confirm: 'Really delete comment?' } %>

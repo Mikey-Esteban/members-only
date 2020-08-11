@@ -19,12 +19,19 @@
  $button-border-color: none;
  $button-hover-border-color: none;
  $button-hover-color: hsl(171, 100%, 41%);
+ $card-background-color: whitesmoke;
 
  @import "bulma";
  @import "font-awesome";
 
+ .post-time {
+   font-size: .7rem;
+ }
 
-
+.trending-title {
+  color:black;
+  text-align: center;
+}
 .navbar-menu {
   font-size: small;
 }
@@ -32,10 +39,17 @@
 .notification:not(:last-child) {
   margin-bottom: 0;
 }
-
+.notification a:not(.button):not(.dropdown-item) {
+    color: currentColor;
+    text-decoration: none;
+}
 .dropdown-content {
   color:black;
 }
 .comment-box {
   margin-left: 5px;
+}
+
+.tags-active {
+  display: none;
 }

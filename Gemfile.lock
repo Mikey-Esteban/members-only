@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/jonhue/acts_as_favoritor.git
+  revision: 65a3e04cda8332cd14e5514c23f35c22faa99e71
+  specs:
+    acts_as_favoritor (5.0.0)
+      activerecord (>= 5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -56,8 +63,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    acts_as_favoritor (5.0.0)
-      activerecord (>= 5.0)
     addressable (2.7.0)
       public_suffix (>= 2.0.2, < 5.0)
     bcrypt (3.1.15)
@@ -259,7 +264,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  acts_as_favoritor
+  acts_as_favoritor!
   better_errors
   binding_of_caller
   bootsnap (>= 1.4.2)

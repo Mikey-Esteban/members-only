@@ -5,6 +5,7 @@ class PostsController < ApplicationController
   def toggle_favorite
     @post = Post.find_by(id: params[:id])
     current_member.favorited?(@post) ? current_member.unfavorite(@post) : current_member.favorite(@post)
+
   end
 
   # GET /posts
@@ -13,7 +14,8 @@ class PostsController < ApplicationController
     @posts = Post.all.order("created_at DESC")
     @post = Post.new
 
-    @comment = current_member.comments.build if member_signed_in?
+    @members = Member.all
+    # @comment = current_member.comments.build if member_signed_in?
     # @comment.post_id = @post.id
   end
 

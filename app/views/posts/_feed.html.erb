@@ -1,17 +1,28 @@
 <div class="column is-half">
+<% if member_signed_in? %>
   <article class="media box">
-    <figure class="media-left">
-      <p class="image is-64x64">
-        <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
-      </p>
-    </figure>
-    <div class="media-content">
-      <%= render 'form' %><br>
-    </div>
-    <div class="tabs">
-</div>
+      <figure class="media-left">
+        <p class="image is-64x64">
+          <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
+        </p>
+      </figure>
+      <div class="media-content">
+        <%= render 'form' %><br>
+      </div>
   </article>
-
+<% else %>
+<div class="section">
+  <button class="button is-primary modal-button is-large">
+    <span class="icon">
+      <i class="fas fa-user-secret"></i>
+    </span>
+    <span>Welcome</span>
+  </button>
+  <div class="modal">
+    <%= render 'welcome' %>
+  </div>
+</div>
+<% end %>
   <% @posts.each do |post|  %>
     <div class="box">
       <article class="media">
@@ -24,20 +35,34 @@
           <div class="content">
             <div>
               <% if member_signed_in? %>
-                <strong><%= post.member.name %></strong> <small>@<%= post.member.username %></small> <small><%= post.updated_at.to_date.to_s %></small>
+                <strong><%= post.member.name %></strong> <small>@<%= post.member.username %></small> <small><%= time_ago_in_words(Time.now, post.created_at) %></small>
               <% else %>
-                <strong>Anonymous</strong>
+                <strong>Anonymous</strong> <small><%= time_ago_in_words(Time.now, post.created_at) %></small>
               <% end %>
               <br>
               <%= post.message %>
             </div>
             <div class="tabs is-right">
               <ul>
-                <li><a>likes</a></li>
-                <li><a href="posts/<%= post.id %>/comments"><%= post.comments.size %> comments</a></li>
+                <li class="like-link">
+                  <a><%= pluralize(post.favoritors.count, "like") %></a>
+                </li>
+                <% if member_signed_in? %>
+                  <li class="comment-link"><a href="posts/<%= post.id %>/comments"><%= pluralize(post.comments.size, "comment") %></a></li>
+                <% else %>
+                  <li class="comment-link"><a><%= pluralize(post.comments.size, "comment") %></a></li>
+                <% end %>
               </ul>
             </div>
+            <% if member_signed_in? %>
+              <div class="tags tags-active">
+                <% post.favoritors.each do |favoritor| %>
+                  <span class="tag"><%= favoritor.name %></span>
+                <% end %>
+              </div>
+            <% end %>
           </div>
+
           <nav class="level is-mobile">
             <% if member_signed_in? %>
               <div class="level-left">
@@ -87,13 +112,15 @@
                     <div class="dropdown-content">
                       <% post.comments.each do |comment| %>
                       <a href="#" class="dropdown-item">
-                        <%= comment.body %>
+                        <% if comment.member %>
+                        <ul>
+                          <li><%= comment.member.name %></li>
+                          <li><%= comment.body %></li>
+                          <li><%= time_ago_in_words(Time.now, comment.created_at) %></li>
+                        </ul>
+                        <% end %>
                       </a>
                       <% end %>
-                      <hr class="dropdown-divider">
-                      <a href="<%= new_member_registration_path %>" class="dropdown-item button is-primary is-outlined">
-                        Sign up to know who says what!
-                      </a>
                     </div>
                   </div>
                 </div>
@@ -109,9 +136,32 @@
                 <% end %>
               </div>
             <% else %>
-              <div class="level-left">
-                <a class="button is-primary is-outlined is-small" href="<%= new_member_registration_path %>">Sign up to know who says what!</a>
+            <div class="dropdown comment-box">
+              <div class="dropdown-trigger">
+                <button class="button comment-button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
+                  <span>View Comments</span>
+                </button>
               </div>
+              <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                <div class="dropdown-content">
+                  <% post.comments.each do |comment| %>
+                  <a href="#" class="dropdown-item">
+                    <% if comment.member %>
+                    <ul>
+                      <li>Anon</li>
+                      <li><%= comment.body %></li>
+                      <li><%= time_ago_in_words(Time.now, comment.created_at) %></li>
+                    </ul>
+                    <% end %>
+                  </a>
+                  <% end %>
+                  <hr class="dropdown-divider">
+                  <a class="button is-primary is-outlined is-small" href="<%= new_member_registration_path %>">
+                    Sign up to know who says what!
+                  </a>
+                </div>
+              </div>
+            </div>
             <% end %>
           </nav>
 

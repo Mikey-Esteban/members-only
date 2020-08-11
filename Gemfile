@@ -26,7 +26,7 @@ gem 'devise'
 # Use Font Awesome icon helpers
 gem 'font-awesome-rails'
 # Use Acts as Favoritor for likes
-gem 'acts_as_favoritor'
+gem 'acts_as_favoritor', github: 'jonhue/acts_as_favoritor'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password

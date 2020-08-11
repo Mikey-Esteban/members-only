@@ -1,9 +1,22 @@
 <div class="section">
   <div class="columns is-centered">
     <div class="column is-6">
-      <h1 class="title is-4"><%= @post.message %></h1>
-      <h1 class="title is-5"><%= @post.comments.size %> Comments</h1>
-      <%= render partial: 'posts/comments', collection: @post.comments.reverse %>
+      <div class="box">
+
+        <h1 class="title is-4">
+          <% if member_signed_in? %>
+            <%= @post.member.name %> <small>@<%= @post.member.username %></small> %>
+          <% else %>
+            Anonymous
+          <% end %>
+          <p class="post-time"><%= time_ago_in_words(Time.now, @post.created_at) %></p>
+        </h1>
+        <div class="notification is-primary is-light">
+          <h1 class="title is-5"><%= @post.message %></h1>
+        </div>
+        <%= render partial: 'posts/comments' %>
+      </div>
+
     </div>
   </div>
 </div>
