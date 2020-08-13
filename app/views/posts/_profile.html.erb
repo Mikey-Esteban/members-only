@@ -49,7 +49,7 @@
     </div>
     <div class="following-tags tags tags-active">
       <% member_liked_data[:following].each do |member| %>
-        <a class="tag is-black is-rounded" href="#"><%= member.name %></a>
+        <a class="tag is-black is-rounded" href="/members/<%= member.id %>"><%= member.name %></a>
       <% end %>
     </div>
     <footer class="card-footer">

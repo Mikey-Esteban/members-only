@@ -1,0 +1,201 @@
+<div class="container profile-container">
+  <div class="columns is-centered">
+    <div class="column is-two-thirds">
+      <article class="media">
+        <figure class="media-left">
+          <p class="image is-128x128 member-profile-pic">
+            <% if @member.avatar.attached? %>
+              <%= image_tag @member.avatar, :class => "is-rounded" %>
+            <% else %>
+              <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
+            <% end %>
+          </p>
+        </figure>
+        <div class="media-content">
+          <div class="content level">
+            <div class="level-left">
+              <div class="level-item">
+                <h1 class="title is0-4"><%= @member.username %></h1>
+              </div>
+              <div class="level-item">
+                <button class="button is-primary is-small"> Edit Profile </button>
+              </div>
+            </div>
+          </div>
+          <div class="content level">
+            <div class="level-left">
+              <div class="level-item">
+                <p><strong><%= @member.posts.count %></strong> posts</p>
+              </div>
+              <div class="level-item">
+                <p><button class="button"><strong class="count"><%= member_followers(@member).length %></strong> <small class="count-text">followers</small></button></p>
+              </div>
+              <div class="level-item">
+                <% data = member_liked_data(@member) %>
+                <p><button class="button"><strong class="count"><%= data[:following].length %></strong> <small class="count-text">following</small></button></p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p>
+              <strong><%= @member.name %></strong>
+              <br>
+              <%= @member.blurb %>
+            </p>
+          </div>
+        </div>
+      </article>
+      <hr>
+
+      <% divided_posts = divide_posts(@posts) %>
+      <% divided_posts.each do |array| %>
+        <div class="tile is-ancestor">
+          <% array.each do |post| %>
+            <div class="tile is-parent">
+              <article class="media">
+                <div class="media-content">
+                  <div class="content">
+                    <p>
+                      <strong><%= post.title %></strong>
+                      <br>
+                      <%= post.message %>
+                      <br>
+                      <small>
+                        <a>Like</a> ·
+                        <a>Reply</a> ·
+                        <% if post.comments.count > 0 %>
+                          <a class="media-active-toggler">View Comments</a> ·
+                        <% end %>
+                        3 hrs
+                      </small>
+                    </p>
+                  </div>
+                  <div class="view-comments media-active">
+                    <% post.comments.each do |comment| %>
+                      <article class="media">
+                        <figure class="media-left">
+                          <p class="image is-48x48">
+                            <% if comment.member.avatar.attached? %>
+                              <%= image_tag comment.member.avatar, :class => "is-rounded" %>
+                            <% else %>
+                              <img class="is-rounded" src="https://bulma.io/images/placeholders/24x24.png">
+                            <% end %>
+                          </p>
+                        </figure>
+                        <div class="media-content">
+                          <div class="content">
+                            <p>
+                              <strong><%= comment.member.name %></strong>
+                              <br>
+                              <%= comment.body %>
+                              <br>
+                              <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                            </p>
+                          </div>
+                        </div>
+                      </article>
+                    <% end %>
+                  </div>
+                </div>
+              </article>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+
+      <div class="tile is-ancestor">
+        <div class="tile is-parent">
+          <article class="tile is-child box">
+            <article class="media">
+              <div class="media-content">
+                <div class="content">
+                  <p>
+                    <strong>Barbara Middleton</strong>
+                    <br>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
+                    <br>
+                    <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
+                  </p>
+                </div>
+
+                <article class="media">
+                  <figure class="media-left">
+                    <p class="image is-48x48">
+                      <img src="https://bulma.io/images/placeholders/96x96.png">
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <div class="content">
+                      <p>
+                        <strong>Sean Brown</strong>
+                        <br>
+                        Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
+                        <br>
+                        <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                      </p>
+                    </div>
+
+                  </div>
+                </article>
+
+                <article class="media">
+                  <figure class="media-left">
+                    <p class="image is-48x48">
+                      <img src="https://bulma.io/images/placeholders/96x96.png">
+                    </p>
+                  </figure>
+                  <div class="media-content">
+                    <div class="content">
+                      <p>
+                        <strong>Kayli Eunice </strong>
+                        <br>
+                        Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas varius felis sit amet magna vestibulum euismod malesuada cursus libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus lacinia non nisl id feugiat.
+                        <br>
+                        <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                      </p>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </article>
+            <article class="media">
+              <figure class="media-left">
+                <p class="image is-64x64">
+                  <img src="https://bulma.io/images/placeholders/128x128.png">
+                </p>
+              </figure>
+              <div class="media-content">
+                <div class="field">
+                  <p class="control">
+                    <textarea class="textarea" placeholder="Add a comment..."></textarea>
+                  </p>
+                </div>
+                <div class="field">
+                  <p class="control">
+                    <button class="button">Post comment</button>
+                  </p>
+                </div>
+              </div>
+            </article>
+          </article>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child box">
+            <p class="title">Foo</p>
+            <p class="subtitle">Bar</p>
+          </article>
+        </div>
+        <div class="tile is-parent">
+          <article class="tile is-child box">
+            <p class="title">Third column</p>
+            <p class="subtitle">With some content</p>
+            <div class="content">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

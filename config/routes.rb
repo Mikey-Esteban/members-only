@@ -1,11 +1,10 @@
 Rails.application.routes.draw do
   devise_for :members, :controllers => { registrations: 'registrations'}
+  resources :members, only: :show
 
   resources :posts do
     resources :comments
   end
-
-  resources :profiles, only: :show
 
   resources :posts, only: :index do
     member do

@@ -64,8 +64,10 @@
               <% else %>
                 <strong>Anonymous</strong> <small><%= time_ago_in_words(Time.now, post.created_at) %></small>
               <% end %>
-              <br>
-              <%= post.message %>
+              <div class="message-content">
+                <strong><%= post.title %></strong><br>
+                <%= post.message %>
+              </div>
             </div>
             <div class="tabs is-right">
               <ul>
