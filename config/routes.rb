@@ -5,9 +5,12 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  resources :profiles, only: :show
+
   resources :posts, only: :index do
     member do
-      post 'toggle-favorite', to: 'posts#toggle_favorite'
+      post 'toggle_follow', to: 'posts#toggle_follow'
+      post 'toggle_favorite', to: 'posts#toggle_favorite'
     end
   end
 

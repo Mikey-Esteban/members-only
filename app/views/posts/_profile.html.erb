@@ -1,4 +1,4 @@
-<div class="column is-one-fifth">
+<div class="column is-quarter">
   <div class="card">
     <header class="card-header">
       <p class="card-header-title">
@@ -11,17 +11,51 @@
       </a>
     </header>
     <div class="card-content">
-      <div class="content">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus nec iaculis mauris.
-        <a href="#">@bulmaio</a>. <a href="#">#css</a> <a href="#">#responsive</a>
+      <div>
+        <p class="image is-64x64">
+          <% if current_member.avatar.attached? %>
+            <%= image_tag current_member.avatar, :class => "is-rounded" %>
+          <% else %>
+            <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
+          <% end %>
+        </p>
+      </div>
+      <div>
+        <%= current_member.blurb %>
+        <a href="#">@<%= current_member.username %></a>. <a href="#">#css</a> <a href="#">#responsive</a>
         <br>
         <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
       </div>
     </div>
+    <div class="tabs is-small">
+      <ul>
+        <% member_liked_data = member_liked_data(current_member) %>
+        <% member_liked_data %>
+        <% followers = member_followers(current_member) %>
+        <li><a class="liked-posts-tab"><%= member_liked_data[:liked_posts].length %> liked posts</a></li>
+        <li><a class="followers-tab"><%= followers.length %> followers</a></li>
+        <li><a class="following-tab"><%= member_liked_data[:following].length %> following</a></li>
+      </ul>
+    </div>
+    <div class="liked-posts-tags tags tags-active">
+      <% member_liked_data[:liked_posts].each do |post| %>
+        <a class="tag is-black is-rounded" href="<%= post_path(post) %>"><%= post.message[0..4] %>..</a>
+      <% end %>
+    </div>
+    <div class="followers-tags tags tags-active">
+      <% followers.each do |follower| %>
+        <a class="tag is-black is-rounded" href="#"><%= follower.name %></a>
+      <% end %>
+    </div>
+    <div class="following-tags tags tags-active">
+      <% member_liked_data[:following].each do |member| %>
+        <a class="tag is-black is-rounded" href="#"><%= member.name %></a>
+      <% end %>
+    </div>
     <footer class="card-footer">
       <a href="#" class="card-footer-item">Save</a>
-      <a href="#" class="card-footer-item">Edit</a>
-      <a href="#" class="card-footer-item">Delete</a>
+      <a href="/members/edit" class="card-footer-item">Edit</a>
+      <a href="/members/cancel" class="card-footer-item">Delete</a>
     </footer>
   </div>
 </div>

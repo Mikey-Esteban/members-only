@@ -1,6 +1,7 @@
 class Member < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  acts_as_favoritable
   acts_as_favoritor
 
   devise :database_authenticatable, :registerable,
@@ -9,5 +10,6 @@ class Member < ApplicationRecord
   has_many :posts
   has_many :comments
   has_many :likes
+  has_one_attached :avatar
 
 end

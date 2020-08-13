@@ -5,7 +5,13 @@ class PostsController < ApplicationController
   def toggle_favorite
     @post = Post.find_by(id: params[:id])
     current_member.favorited?(@post) ? current_member.unfavorite(@post) : current_member.favorite(@post)
+  end
 
+  def toggle_follow
+    @post = Post.find(params[:id])
+    @member = @post.member
+    # current_member.favorite(@post.member)
+    current_member.favorited?(@member) ? current_member.unfavorite(@member) : current_member.favorite(@member)
   end
 
   # GET /posts

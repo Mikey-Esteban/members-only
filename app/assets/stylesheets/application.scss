@@ -24,16 +24,27 @@
  @import "bulma";
  @import "font-awesome";
 
- .post-time {
-   font-size: .7rem;
- }
-
+.button-is-following {
+  padding-right: 16px;
+}
+.button-not-following {
+  padding-right: 33px;
+}
+.follow-tag {
+  margin-top: 4px;
+}
+.post-time {
+  font-size: .7rem;
+}
 .trending-title {
   color:black;
   text-align: center;
 }
 .navbar-menu {
   font-size: small;
+}
+.navbar-brand {
+  font-size: 3rem;
 }
 
 .notification:not(:last-child) {
@@ -52,4 +63,9 @@
 
 .tags-active {
   display: none;
+}
+
+// View Comments
+.time-ago {
+  font-size: .6rem;
 }

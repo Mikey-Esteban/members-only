@@ -1,5 +1,6 @@
 var postId = '<%= @post.id %>';
 
+
 function toggleLikeButton(postId, innerHTML) {
   let likeButton = document.querySelector(`.like-icon[data-id='${postId}']`)
   let svgButton = likeButton.querySelector("svg")

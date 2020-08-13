@@ -3,7 +3,11 @@
   <article class="media box">
       <figure class="media-left">
         <p class="image is-64x64">
-          <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
+          <% if current_member.avatar.attached? %>
+            <%= image_tag current_member.avatar, :class => "is-rounded" %>
+          <% else %>
+            <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
+          <% end %>
         </p>
       </figure>
       <div class="media-content">
@@ -26,11 +30,32 @@
   <% @posts.each do |post|  %>
     <div class="box">
       <article class="media">
-        <div class="media-left">
-          <figure class="image is-64x64">
-            <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png" alt="Image">
-          </figure>
-        </div>
+        <% if member_signed_in? %>
+          <div class="media-left <%= current_member.favorited?(post.member) ? 'button-is-following' : 'button-not-following' %>">
+            <figure class="image is-64x64">
+              <% if post.member.avatar.attached? %>
+                <%= image_tag post.member.avatar, :class => "is-rounded" %>
+              <% else %>
+                <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
+              <% end %>
+            </figure>
+            <% unless current_member == post.member %>
+              <%= link_to toggle_follow_post_path(post), method: :post, remote: true, :class => "level-item post-buttons" do %>
+                <div class="follow-icon" data-id="<%= post.id %>">
+                  <button class="button follow-tag is-rounded is-small <%= current_member.favorited?(post.member) ? 'is-primary is-outlined' : 'is-light' %>">
+                    <%= current_member.favorited?(post.member) ? 'following' : 'follow' %>
+                  </button>
+                </div>
+              <% end %>
+            <% end %>
+          </div>
+        <% else %>
+          <div class="media-left">
+            <figure class="image is-64x64">
+              <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
+            </figure>
+          </div>
+        <% end %>
         <div class="media-content">
           <div class="content">
             <div>
@@ -101,29 +126,30 @@
                     </div>
                   </div>
                 </div>
-
-                <div class="dropdown comment-box">
-                  <div class="dropdown-trigger">
-                    <button class="button comment-button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
-                      <span>View Comments</span>
-                    </button>
-                  </div>
-                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                    <div class="dropdown-content">
-                      <% post.comments.each do |comment| %>
-                      <a href="#" class="dropdown-item">
-                        <% if comment.member %>
-                        <ul>
-                          <li><%= comment.member.name %></li>
-                          <li><%= comment.body %></li>
-                          <li><%= time_ago_in_words(Time.now, comment.created_at) %></li>
-                        </ul>
+                <% unless post.comments.count == 0 %>
+                  <div class="dropdown comment-box">
+                    <div class="dropdown-trigger">
+                      <button class="button comment-button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
+                        <span>View Comments</span>
+                      </button>
+                    </div>
+                    <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                      <div class="dropdown-content">
+                        <% post.comments.each do |comment| %>
+                        <a href="#" class="dropdown-item">
+                          <% if comment.member %>
+                          <ul>
+                            <li><strong><%= comment.member.name %></strong></li>
+                            <li class="comment-message"><%= comment.body %></li>
+                            <li class="time-ago"><%= time_ago_in_words(Time.now, comment.created_at) %></li>
+                          </ul>
+                          <% end %>
+                        </a>
                         <% end %>
-                      </a>
-                      <% end %>
+                      </div>
                     </div>
                   </div>
-                </div>
+                <% end %>
               </div>
               <div class="level-right">
                 <a class="level-item post-buttons" href="<%= edit_post_path(post) %>" aria-label="like">
@@ -136,36 +162,34 @@
                 <% end %>
               </div>
             <% else %>
-            <div class="dropdown comment-box">
-              <div class="dropdown-trigger">
-                <button class="button comment-button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
-                  <span>View Comments</span>
-                </button>
-              </div>
-              <div class="dropdown-menu" id="dropdown-menu" role="menu">
-                <div class="dropdown-content">
-                  <% post.comments.each do |comment| %>
-                  <a href="#" class="dropdown-item">
-                    <% if comment.member %>
-                    <ul>
-                      <li>Anon</li>
-                      <li><%= comment.body %></li>
-                      <li><%= time_ago_in_words(Time.now, comment.created_at) %></li>
-                    </ul>
-                    <% end %>
-                  </a>
-                  <% end %>
-                  <hr class="dropdown-divider">
-                  <a class="button is-primary is-outlined is-small" href="<%= new_member_registration_path %>">
-                    Sign up to know who says what!
-                  </a>
+              <% unless post.comments.count == 0 %>
+                <div class="dropdown comment-box">
+                  <div class="dropdown-trigger">
+                    <button class="button comment-button is-small" aria-haspopup="true" aria-controls="dropdown-menu">
+                      <span>View Comments</span>
+                    </button>
+                  </div>
+                  <div class="dropdown-menu" id="dropdown-menu" role="menu">
+                    <div class="dropdown-content">
+                      <% post.comments.each do |comment| %>
+                      <a href="#" class="dropdown-item">
+                        <ul>
+                          <li><strong>Anon</strong></li>
+                          <li class="comment-message"><%= comment.body %></li>
+                          <li class="time-agoß"><%= time_ago_in_words(Time.now, comment.created_at) %></li>
+                        </ul>
+                      </a>
+                      <% end %>
+                      <hr class="dropdown-divider">
+                      <a class="button is-primary is-outlined is-small" href="<%= new_member_registration_path %>">
+                        Sign up to know who says what!
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
+              <% end %>
             <% end %>
           </nav>
-
-
         </div>
       </article>
     </div>

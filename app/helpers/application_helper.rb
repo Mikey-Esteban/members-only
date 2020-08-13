@@ -4,6 +4,23 @@ module ApplicationHelper
      hash = hash.sort_by {|k,v| v}.reverse
   end
 
+  def member_liked_data(current_member)
+    list = current_member.all_favorited
+    data = { :liked_posts => [], :following => [] }
+
+    list.each do |fave|
+      data[:liked_posts] << fave if fave.class == Post
+      data[:following] << fave if fave.class == Member
+    end
+
+    return data
+  end
+
+  def member_followers(current_member)
+    current_member.favoritors_by_type('Member')
+  end
+
+
   def time_ago_in_words(x, y)
     diff = x - y
     if diff < 60
@@ -40,7 +57,10 @@ module ApplicationHelper
   def most_active_post(posts)
     posts_scores = {}
     @posts.each do |post|
-      posts_scores[post.id] = [post.favoritable_total[:favorite] + post.comments.count, post.message]
+      total = 0
+      total += post.favoritable_total[:favorite] if post.favoritable_total[:favorite]
+      total += post.comments.count if post.comments
+      posts_scores[post.id] = [total, post.message]
     end
 
     return descend_sort(posts_scores).take(3)

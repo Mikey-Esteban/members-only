@@ -3,7 +3,8 @@ console.log('LOADED THE like tags script');
 // const tagsDivs = document.querySelectorAll(".tags");
 const postsDivs = document.querySelectorAll(".content")
 
-postsDivs.forEach( function(postDiv) {
+postsDivs.forEach(postDiv => {
+  console.log(postDiv)
   const likeLink = postDiv.querySelector(".like-link")
   const likeTags = postDiv.querySelector(".tags")
 
