@@ -1,4 +1,4 @@
-<div class="column is-half">
+<div class="column is-half-desktop is-two-fifths-tablet">
 <% if member_signed_in? %>
   <article class="media box">
       <figure class="media-left">
@@ -61,7 +61,7 @@
             <div>
               <% if member_signed_in? %>
                 <strong><%= post.member.name %></strong>
-                <a href="/members/<%= post.member.id %>"><small>@<%= post.member.username %></small></a> 
+                <a href="/members/<%= post.member.id %>"><small>@<%= post.member.username %></small></a>
                 <small><%= time_ago_in_words(Time.now, post.created_at) %></small>
               <% else %>
                 <strong>Anonymous</strong> <small><%= time_ago_in_words(Time.now, post.created_at) %></small>
