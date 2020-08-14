@@ -43,12 +43,12 @@ module ApplicationHelper
   def most_active_member(members)
     members_scores = {}
     members.each do |member|
-      members_scores[member.name] = member.favoritor_total[:favorite]
+      members_scores[member.name] = [member, member.favoritor_total[:favorite]]
     end
     @posts.each do |post|
       post.comments.each do |comment|
         to_add = comment.member.name
-        members_scores[to_add] += 1
+        members_scores[to_add][1] += 1
       end
     end
     return descend_sort(members_scores).take(3)

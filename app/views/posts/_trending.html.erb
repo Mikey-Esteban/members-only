@@ -1,0 +1,37 @@
+<div class="column is-one-fifth">
+  <nav class="panel">
+    <br>
+    <% data =  most_active_member(@members) %>
+    <h2 class="subtitle trending-title">Most Active Members</h2>
+    <% data.each do |member| %>
+      <div class="notification is-light">
+        <article class="media">
+          <figure class="media-left">
+            <p class="image is-32x32">
+              <% if member[1][0].avatar.attached? %>
+                <%= image_tag member[1][0].avatar, :class => "is-rounded" %>
+              <% else %>
+                <img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png">
+              <% end %>
+            </p>
+          </figure>
+          <div class="media-content">
+            <div class="content">
+              <small><%= member[0] %></small>
+            </div>
+          </div>
+        </article>
+      </div>
+    <% end %>
+    <br>
+    <% data = most_active_post(@posts) %>
+    <h2 class="subtitle trending-title">Top Posts</h2>
+    <% data.each do |post| %>
+      <div class="notification is-light">
+        <a class="trending-link" href="posts/<%= post[0] %>">
+          "<%= post[1][1] %>"
+        </a>
+      </div>
+    <% end %>
+  </nav>
+</div>

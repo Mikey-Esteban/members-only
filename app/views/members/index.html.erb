@@ -1,0 +1,14 @@
+<div class="columns is-centered">
+  <div class="column is-4">
+    <aside class="menu">
+      <p class="menu-label">
+        Members
+      </p>
+      <ul class="menu-list">
+        <% @members.each do |member| %>
+        <li><a href="members/<%= member.id %>"><%= member.name %></a></li>
+        <% end %>
+      </ul>
+    </aside>
+  </div>
+</div>

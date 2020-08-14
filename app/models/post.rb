@@ -3,7 +3,8 @@ class Post < ApplicationRecord
 
   belongs_to :member
 
-  has_many :comments
+  has_many :comments, dependent: :destroy
   has_many :likes
+  has_one_attached :image
 
 end

@@ -4,9 +4,9 @@
       <p class="card-header-title">
         <%= current_member.name %>
       </p>
-      <a href="#" class="card-header-icon" aria-label="more options">
+      <a href="/members/edit" class="card-header-icon" aria-label="more options">
         <span class="icon">
-          <i class="fas fa-angle-down" aria-hidden="true"></i>
+          <i class="fas fa-cog" aria-hidden="true"></i>
         </span>
       </a>
     </header>
@@ -21,10 +21,9 @@
         </p>
       </div>
       <div>
-        <%= current_member.blurb %>
-        <a href="#">@<%= current_member.username %></a>. <a href="#">#css</a> <a href="#">#responsive</a>
+        <small><%= current_member.blurb %></small>
+        <a href="/members/<%= current_member.id %>">@<%= current_member.username %></a>
         <br>
-        <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
       </div>
     </div>
     <div class="tabs is-small">
@@ -52,10 +51,9 @@
         <a class="tag is-black is-rounded" href="/members/<%= member.id %>"><%= member.name %></a>
       <% end %>
     </div>
+
     <footer class="card-footer">
-      <a href="#" class="card-footer-item">Save</a>
-      <a href="/members/edit" class="card-footer-item">Edit</a>
-      <a href="/members/cancel" class="card-footer-item">Delete</a>
+      <a href="/members" class="card-footer-item"><small>All Members<small></a>
     </footer>
   </div>
 </div>

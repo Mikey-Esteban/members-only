@@ -7,7 +7,10 @@
             <div class="level-item">
               <h1 class="title is-4">
                 <% if member_signed_in? %>
-                  <%= @post.member.name %> <small>@<%= @post.member.username %></small>
+                  <%= @post.member.name %>
+                  <a href="/members/<%= @post.member.id %>"
+                    <small>@<%= @post.member.username %></small>
+                  </a>
                 <% else %>
                   Anonymous
                 <% end %>
@@ -15,25 +18,31 @@
               </h1>
             </div>
           </div>
-          <div class="level-right">
-            <div class="level-item">
-              <p class="image is-64x64">
-                <% if @post.member.avatar.attached? %>
-                  <%= image_tag @post.member.avatar, :class => "is-rounded" %>
-                <% else %>
-                  <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
-                <% end %>
-              </p>
+          <%if member_signed_in? %>
+            <div class="level-right">
+              <div class="level-item">
+                <p class="image is-64x64">
+                  <% if @post.member.avatar.attached? %>
+                    <%= image_tag @post.member.avatar, :class => "is-rounded" %>
+                  <% else %>
+                    <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
+                  <% end %>
+                </p>
+              </div>
             </div>
-          </div>
+          <% end %>
         </div>
 
         <div class="notification is-primary is-light">
-          <h1 class="title is-5"><%= @post.message %></h1>
+        <% if @post.image.attached? %>
+          <%= image_tag @post.image %>
+        <% end %>
+          <h1 class="title is-4"><%= @post.title %></h1>
+          <h1 class="subtitle"><%= @post.message %></h1>
         </div>
         <%= render partial: 'posts/comments' %>
+        <%= render 'comments/form' if member_signed_in? %>
       </div>
-
     </div>
   </div>
 </div>

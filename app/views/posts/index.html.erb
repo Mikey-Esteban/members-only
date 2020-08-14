@@ -1,13 +1,13 @@
 <section class="section">
   <div class="container">
     <div class="columns">
+      <%= render 'quotes' %>
+      <%= render 'feed' %>
       <% if member_signed_in? %>
         <%= render 'profile' %>
       <% else %>
-        <%= render 'left_banner' %>
+        <%= render 'trending' %>
       <% end %>
-      <%= render 'feed' %>
-      <%= render 'quotes' %>
     </div>
   </div>
 </section>

@@ -17,23 +17,52 @@
               <div class="level-item">
                 <h1 class="title is0-4"><%= @member.username %></h1>
               </div>
-              <div class="level-item">
-                <button class="button is-primary is-small"> Edit Profile </button>
-              </div>
+              <% if current_member == @member %>
+                <div class="level-item">
+                  <button class="button is-primary is-small"> Edit Profile </button>
+                </div>
+              <% end %>
             </div>
           </div>
           <div class="content level">
             <div class="level-left">
+              <% member_liked_data = member_liked_data(@member) %>
+              <% member_liked_data %>
+              <% followers = member_followers(@member) %>
               <div class="level-item">
                 <p><strong><%= @member.posts.count %></strong> posts</p>
               </div>
               <div class="level-item">
-                <p><button class="button"><strong class="count"><%= member_followers(@member).length %></strong> <small class="count-text">followers</small></button></p>
+                <p>
+                  <button class="button followers-button">
+                    <strong class="count"><%= member_followers(@member).length %></strong>
+                    <small class="count-text">followers</small>
+                  </button>
+                </p>
               </div>
               <div class="level-item">
                 <% data = member_liked_data(@member) %>
-                <p><button class="button"><strong class="count"><%= data[:following].length %></strong> <small class="count-text">following</small></button></p>
+                <p>
+                  <button class="button following-button">
+                    <strong class="count"><%= data[:following].length %></strong>
+                    <small class="count-text">following</small>
+                  </button>
+                </p>
               </div>
+            </div>
+          </div>
+          <div class="content level">
+            <div class="followers-div tags tags-active">
+              <% followers.each do |follower| %>
+                <a class="tag is-black is-rounded" href="/members/<%= follower.id %>"><%= follower.name %></a>
+              <% end %>
+            </div>
+          </div>
+          <div class="content level">
+            <div class="following-div tags-active">
+              <% member_liked_data[:following].each do |member| %>
+                <a class="tag is-black is-rounded" href="/members/<%= member.id %>"><%= member.name %></a>
+              <% end %>
             </div>
           </div>
           <div>
@@ -55,18 +84,21 @@
               <article class="media">
                 <div class="media-content">
                   <div class="content">
+                    <% if post.image.attached? %>
+                      <p class="image is-128x128">
+                        <%= image_tag post.image %>
+                      </p>
+                    <% end %>
                     <p>
-                      <strong><%= post.title %></strong>
+                      <a href="/posts/<%= post.id %>"><strong><%= post.title %></strong></a>
                       <br>
                       <%= post.message %>
                       <br>
                       <small>
-                        <a>Like</a> ·
-                        <a>Reply</a> ·
                         <% if post.comments.count > 0 %>
                           <a class="media-active-toggler">View Comments</a> ·
                         <% end %>
-                        3 hrs
+                        <%= time_ago_in_words(Time.now, post.created_at) %>
                       </small>
                     </p>
                   </div>
@@ -78,7 +110,7 @@
                             <% if comment.member.avatar.attached? %>
                               <%= image_tag comment.member.avatar, :class => "is-rounded" %>
                             <% else %>
-                              <img class="is-rounded" src="https://bulma.io/images/placeholders/24x24.png">
+                              <img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png">
                             <% end %>
                           </p>
                         </figure>
@@ -89,7 +121,7 @@
                               <br>
                               <%= comment.body %>
                               <br>
-                              <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
+                              <small> · <%= time_ago_in_words(Time.now, comment.created_at) %></small>
                             </p>
                           </div>
                         </div>
@@ -102,100 +134,6 @@
           <% end %>
         </div>
       <% end %>
-
-      <div class="tile is-ancestor">
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <article class="media">
-              <div class="media-content">
-                <div class="content">
-                  <p>
-                    <strong>Barbara Middleton</strong>
-                    <br>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis porta eros lacus, nec ultricies elit blandit non. Suspendisse pellentesque mauris sit amet dolor blandit rutrum. Nunc in tempus turpis.
-                    <br>
-                    <small><a>Like</a> · <a>Reply</a> · 3 hrs</small>
-                  </p>
-                </div>
-
-                <article class="media">
-                  <figure class="media-left">
-                    <p class="image is-48x48">
-                      <img src="https://bulma.io/images/placeholders/96x96.png">
-                    </p>
-                  </figure>
-                  <div class="media-content">
-                    <div class="content">
-                      <p>
-                        <strong>Sean Brown</strong>
-                        <br>
-                        Donec sollicitudin urna eget eros malesuada sagittis. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Aliquam blandit nisl a nulla sagittis, a lobortis leo feugiat.
-                        <br>
-                        <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                      </p>
-                    </div>
-
-                  </div>
-                </article>
-
-                <article class="media">
-                  <figure class="media-left">
-                    <p class="image is-48x48">
-                      <img src="https://bulma.io/images/placeholders/96x96.png">
-                    </p>
-                  </figure>
-                  <div class="media-content">
-                    <div class="content">
-                      <p>
-                        <strong>Kayli Eunice </strong>
-                        <br>
-                        Sed convallis scelerisque mauris, non pulvinar nunc mattis vel. Maecenas varius felis sit amet magna vestibulum euismod malesuada cursus libero. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Phasellus lacinia non nisl id feugiat.
-                        <br>
-                        <small><a>Like</a> · <a>Reply</a> · 2 hrs</small>
-                      </p>
-                    </div>
-                  </div>
-                </article>
-              </div>
-            </article>
-            <article class="media">
-              <figure class="media-left">
-                <p class="image is-64x64">
-                  <img src="https://bulma.io/images/placeholders/128x128.png">
-                </p>
-              </figure>
-              <div class="media-content">
-                <div class="field">
-                  <p class="control">
-                    <textarea class="textarea" placeholder="Add a comment..."></textarea>
-                  </p>
-                </div>
-                <div class="field">
-                  <p class="control">
-                    <button class="button">Post comment</button>
-                  </p>
-                </div>
-              </div>
-            </article>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">Foo</p>
-            <p class="subtitle">Bar</p>
-          </article>
-        </div>
-        <div class="tile is-parent">
-          <article class="tile is-child box">
-            <p class="title">Third column</p>
-            <p class="subtitle">With some content</p>
-            <div class="content">
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ornare magna eros, eu pellentesque tortor vestibulum ut. Maecenas non massa sem. Etiam finibus odio quis feugiat facilisis.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
     </div>
   </div>
 </div>

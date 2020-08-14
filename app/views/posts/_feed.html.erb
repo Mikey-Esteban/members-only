@@ -60,11 +60,18 @@
           <div class="content">
             <div>
               <% if member_signed_in? %>
-                <strong><%= post.member.name %></strong> <small>@<%= post.member.username %></small> <small><%= time_ago_in_words(Time.now, post.created_at) %></small>
+                <strong><%= post.member.name %></strong>
+                <a href="/members/<%= post.member.id %>"><small>@<%= post.member.username %></small></a> 
+                <small><%= time_ago_in_words(Time.now, post.created_at) %></small>
               <% else %>
                 <strong>Anonymous</strong> <small><%= time_ago_in_words(Time.now, post.created_at) %></small>
               <% end %>
               <div class="message-content">
+
+                <% if post.image.attached? %>
+                  <%= image_tag post.image %>
+                <% end %>
+
                 <strong><%= post.title %></strong><br>
                 <%= post.message %>
               </div>
@@ -75,7 +82,7 @@
                   <a><%= pluralize(post.favoritors.count, "like") %></a>
                 </li>
                 <% if member_signed_in? %>
-                  <li class="comment-link"><a href="posts/<%= post.id %>/comments"><%= pluralize(post.comments.size, "comment") %></a></li>
+                  <li class="comment-link"><a><%= pluralize(post.comments.size, "comment") %></a></li>
                 <% else %>
                   <li class="comment-link"><a><%= pluralize(post.comments.size, "comment") %></a></li>
                 <% end %>
@@ -153,16 +160,18 @@
                   </div>
                 <% end %>
               </div>
-              <div class="level-right">
-                <a class="level-item post-buttons" href="<%= edit_post_path(post) %>" aria-label="like">
-                  <span class="icon is-small">
-                    <i class="fas fa-pencil-alt" aria-hidden="true"></i>
-                  </span>
-                </a>
-                <%= link_to post_path(post), method: :delete, :class => "level-item post-buttons" do %>
-                  <i class="fas fa-trash-alt" aria-hidden="true"></i>
-                <% end %>
-              </div>
+              <% if current_member == post.member %>
+                <div class="level-right">
+                  <a class="level-item post-buttons" href="<%= edit_post_path(post) %>" aria-label="like">
+                    <span class="icon is-small">
+                      <i class="fas fa-pencil-alt" aria-hidden="true"></i>
+                    </span>
+                  </a>
+                  <%= link_to post_path(post), method: :delete, :class => "level-item post-buttons" do %>
+                    <i class="fas fa-trash-alt" aria-hidden="true"></i>
+                  <% end %>
+                </div>
+              <% end %>
             <% else %>
               <% unless post.comments.count == 0 %>
                 <div class="dropdown comment-box">
