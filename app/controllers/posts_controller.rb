@@ -1,4 +1,6 @@
 class PostsController < ApplicationController
+  POSTS_PER_PAGE = 4
+
   before_action :set_post, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_member!, except: [:index, :show]
 
@@ -17,7 +19,8 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all.order("created_at DESC")
+    @page = params.fetch(:page, 0).to_i
+    @posts = Post.all.order("created_at DESC").offset(@page * POSTS_PER_PAGE).limit(POSTS_PER_PAGE)
     @post = Post.new
 
     @members = Member.all
