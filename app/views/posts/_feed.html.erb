@@ -207,10 +207,14 @@
   <% end %>
   <div class="level">
     <div class="level-left">
-      <%= link_to "Previous Page", posts_path(page: @page - 1) %>
+      <% unless @page == 0 %>
+        <%= link_to "Previous Page", posts_path(page: @page - 1) %>
+      <% end %>
     </div>
     <div class="level-right">
-      <%= link_to "Next Page", posts_path(page: @page + 1) %>
+      <% unless @page == @last_page %>
+        <%= link_to "Next Page", posts_path(page: @page + 1) %>
+      <% end %>
     </div>
   </div>
 </div>
