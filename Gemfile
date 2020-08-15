@@ -27,6 +27,9 @@ gem 'devise'
 gem 'font-awesome-rails'
 # Use Acts as Favoritor for likes
 gem 'acts_as_favoritor', github: 'jonhue/acts_as_favoritor'
+# Use Forgery  and Faker for generating data
+gem 'forgery', '~> 0.7.0'
+gem 'faker', '~> 1.6', '>= 1.6.3'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
