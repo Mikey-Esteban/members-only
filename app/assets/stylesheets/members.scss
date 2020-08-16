@@ -14,3 +14,10 @@
 .media-active {
   display: none;
 }
+
+@media only screen and (max-width: 768px) {
+  /* For mobile phones: */
+  .member-profile-pic {
+    margin-right: 20px;
+  }
+}

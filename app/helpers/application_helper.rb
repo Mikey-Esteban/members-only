@@ -48,7 +48,7 @@ module ApplicationHelper
       temp = member_liked_data(member)
       score += temp[:following].length
       score += temp[:liked_posts].length
-      score += current_member.favoritors_by_type('Member').length
+      score += current_member.favoritors_by_type('Member').length if current_member
       score += member.comments.count
       score += member.posts.count
       data[member] = score
