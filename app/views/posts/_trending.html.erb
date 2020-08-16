@@ -28,12 +28,12 @@
       </div>
     <% end %>
     <br>
-    <% data = most_active_post(@posts) %>
+    <% data = top_posts %>
     <h2 class="subtitle trending-title">Top Posts</h2>
     <% data.each do |post| %>
       <div class="notification is-light">
-        <a class="trending-link" href="posts/<%= post[0] %>">
-          "<%= post[1][1] %>"
+        <a class="trending-link" href="posts/<%= post[0].id %>">
+          "<%= post[0].title %>"
         </a>
       </div>
     <% end %>

@@ -21,6 +21,7 @@ class PostsController < ApplicationController
   def index
     @page = params.fetch(:page, 0).to_i
     @posts = Post.all.order("created_at DESC").offset(@page * POSTS_PER_PAGE).limit(POSTS_PER_PAGE)
+    @all_posts = Post.all
     @last_page = (Post.count / POSTS_PER_PAGE) - 1
 
     @post = Post.new

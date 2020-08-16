@@ -73,11 +73,20 @@ module ApplicationHelper
     return descend_sort(members_scores).take(3)
   end
 
-  def most_active_post(posts)
+  def top_posts
+    data = {}
+    @all_posts.each do |post|
+      data[post] = post.favoritors.count + post.comments.count
+    end
+
+    return descend_sort(data).take(3)
+  end
+
+  def most_active_post
     posts_scores = {}
     @posts.each do |post|
       total = 0
-      total += post.favoritable_total[:favorite] if post.favoritable_total[:favorite]
+      total += post.favoritors.count if post.favoritors.count
       total += post.comments.count if post.comments
       posts_scores[post.id] = [total, post.title, post.message]
     end
