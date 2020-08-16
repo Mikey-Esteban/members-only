@@ -6,7 +6,9 @@
       <% if member_signed_in? %>
         <%= render 'profile' %>
       <% else %>
+      <div class="column is-one-third-desktop is-one-third-tablet">
         <%= render 'trending' %>
+      </div>
       <% end %>
     </div>
   </div>

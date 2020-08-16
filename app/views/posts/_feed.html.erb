@@ -187,7 +187,7 @@
                         <ul>
                           <li><strong>Anon</strong></li>
                           <li class="comment-message"><%= comment.body %></li>
-                          <li class="time-agoß"><%= time_ago_in_words(Time.now, comment.created_at) %></li>
+                          <li class="time-ago"><%= time_ago_in_words(Time.now, comment.created_at) %></li>
                         </ul>
                       </a>
                       <% end %>
@@ -207,24 +207,18 @@
   <% end %>
   <div class="level">
     <div class="level-left">
-      <% unless @page == 0 %>
-        <div class="level-item">
-          <small><%= link_to "Previous Page", posts_path(page: 1) %></small>
-        </div>
-        <div class="level-item">
-          <small><%= link_to "First Page", posts_path(page: @page = 1) %></small>
-        </div>
-      <% end %>
+      <div class="level-item">
+        <% unless @page == 0 %>
+          <small><%= link_to "Previous Page", posts_path(page: @page - 1) %></small>
+        <% end %>
+      </div>
     </div>
     <div class="level-right">
-      <% unless @page == @last_page %>
-        <div class="level-item">
-          <small><%= link_to "Last Page", posts_path(page: @last_page) %></small>
-        </div>
-        <div class="level-item">
+      <div class="level-item">
+        <% unless @page == @last_page %>
           <small><%= link_to "Next Page", posts_path(page: @page + 1) %></small>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

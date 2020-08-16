@@ -40,17 +40,36 @@ module ApplicationHelper
     end
   end
 
+  def top_member
+    data = {}
+    @members.each do |member|
+      score = member.all_favorites.count
+      temp = member_liked_data(member)
+      score += temp[:following].length
+      data[member] = score
+    end
+    @comments.each do |comment|
+      data[comment.member] += 1
+    end
+
+    return descend_sort(data).take(3)
+  end
+
   def most_active_member(members)
     members_scores = {}
     members.each do |member|
       members_scores[member.name] = [member, member.favoritor_total[:favorite]]
     end
-    @posts.each do |post|
-      post.comments.each do |comment|
-        to_add = comment.member.name
-        members_scores[to_add][1] += 1
-      end
+    # @posts.each do |post|
+    #   post.comments.each do |comment|
+    #     to_add = comment.member.name
+    #     members_scores[to_add][1] += 1
+    #   end
+    # end
+    @comments.each do |comment|
+      members_scores[comment.member.name][1] += 1
     end
+
     return descend_sort(members_scores).take(3)
   end
 
@@ -60,7 +79,7 @@ module ApplicationHelper
       total = 0
       total += post.favoritable_total[:favorite] if post.favoritable_total[:favorite]
       total += post.comments.count if post.comments
-      posts_scores[post.id] = [total, post.message]
+      posts_scores[post.id] = [total, post.title, post.message]
     end
 
     return descend_sort(posts_scores).take(3)

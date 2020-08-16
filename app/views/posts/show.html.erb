@@ -39,6 +39,14 @@
         <% end %>
           <h1 class="title is-4"><%= @post.title %></h1>
           <h1 class="subtitle"><%= @post.message %></h1>
+          <a class="like-link"><%= pluralize(@post.favoritors.count, "like") %></a>
+          <% if member_signed_in? %>
+            <div class="tags tags-active">
+              <% @post.favoritors.each do |favoritor| %>
+                <span class="tag"><%= favoritor.name %></span>
+              <% end %>
+            </div>
+          <% end %>
         </div>
         <%= render partial: 'posts/comments' %>
         <%= render 'comments/form' if member_signed_in? %>

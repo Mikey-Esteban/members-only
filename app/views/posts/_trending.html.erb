@@ -1,15 +1,15 @@
-<div class="column is-one-fifth">
+
   <nav class="panel">
     <br>
-    <% data =  most_active_member(@members) %>
+    <% data = top_member %>
     <h2 class="subtitle trending-title">Most Active Members</h2>
     <% data.each do |member| %>
       <div class="notification is-light">
         <article class="media">
           <figure class="media-left">
             <p class="image is-32x32">
-              <% if member[1][0].avatar.attached? %>
-                <%= image_tag member[1][0].avatar, :class => "is-rounded" %>
+              <% if member[0].avatar.attached? %>
+                <%= image_tag member[0].avatar, :class => "is-rounded" %>
               <% else %>
                 <img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png">
               <% end %>
@@ -17,7 +17,11 @@
           </figure>
           <div class="media-content">
             <div class="content">
-              <small><%= member[0] %></small>
+              <% if member_signed_in? %>
+                <a href="members/<%= member[0].id %>"><small><%= member[0].name %></small></a>
+              <% else %>
+                <small><%= member[0].name %></small>
+              <% end %>
             </div>
           </div>
         </article>
@@ -34,4 +38,3 @@
       </div>
     <% end %>
   </nav>
-</div>

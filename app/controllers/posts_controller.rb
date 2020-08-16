@@ -26,8 +26,7 @@ class PostsController < ApplicationController
     @post = Post.new
 
     @members = Member.all
-    # @comment = current_member.comments.build if member_signed_in?
-    # @comment.post_id = @post.id
+    @comments = Comment.all
   end
 
   # GET /posts/1
