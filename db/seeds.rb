@@ -71,13 +71,13 @@ init_male_members.each do |male, value|
   members << male
 end
 
-40.times {
+100.times {
   a = rand 10
   sample = members.sample
   members[a].favorite(sample) unless members[a] == sample
 }
 
-40.times {
+80.times {
   i = rand 10
   puts "i: #{i}"
   post = members[i].posts.create!(:title => Faker::Hipster.sentence, :message => Faker::Hipster.paragraph)
@@ -91,7 +91,7 @@ end
     members[z].favorite(post)
   }
 
-  x = rand 4
+  x = rand 12
   puts "x: #{x}"
   x.times {
     j = rand 10

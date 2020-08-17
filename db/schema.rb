@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 2020_08_13_170303) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.string "commenter"
     t.text "body"
     t.bigint "member_id", null: false
     t.bigint "post_id", null: false
