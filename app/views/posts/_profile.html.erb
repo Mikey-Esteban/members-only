@@ -6,7 +6,7 @@
       </p>
       <a href="/members/edit" class="card-header-icon" aria-label="more options">
         <span class="icon">
-          <i class="fas fa-cog" aria-hidden="true"></i>
+          <i class="far fa-edit"></i>
         </span>
       </a>
     </header>
@@ -39,7 +39,8 @@
     </div>
     <div class="liked-posts-tags tags tags-active">
       <% member_liked_data[:liked_posts].each do |post| %>
-        <a class="tag is-black is-rounded" href="<%= post_path(post) %>"><%= post.message[0..4] %>..</a>
+      <% data = find_post_page([post]) %>
+        <a class="tag is-black is-rounded" href="<%= posts_path(page: data, highlight_id: post.id) %>"><%= post.message[0..4] %>..</a>
       <% end %>
     </div>
     <div class="followers-tags tags tags-active">
