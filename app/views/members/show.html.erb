@@ -86,7 +86,10 @@
                 <div class="media-content">
                   <div class="content">
                     <p>
-                      <a href="/posts/<%= post.id %>"><strong><%= post.title %></strong></a><br>
+                      <% data = find_post_page([post]) %>
+                      <%= link_to posts_path(page: data, highlight_id: post.id) do %>
+                        <strong><%= post.title %></strong>
+                      <% end %>
                       <%= post.message %><br>
                       <small>
                         <% if post.comments.count > 0 %>
