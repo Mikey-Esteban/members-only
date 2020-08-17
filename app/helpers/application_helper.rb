@@ -8,7 +8,7 @@ module ApplicationHelper
     if current_member.email[0..3] == 'user'
       return current_member.email[0..4]
     else
-      reutrn current_member.avatar
+      return current_member.avatar
     end
   end
 
