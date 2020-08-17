@@ -84,16 +84,9 @@
               <article class="media">
                 <div class="media-content">
                   <div class="content">
-                    <% if post.image.attached? %>
-                      <p class="image is-128x128">
-                        <%= image_tag post.image %>
-                      </p>
-                    <% end %>
                     <p>
-                      <a href="/posts/<%= post.id %>"><strong><%= post.title %></strong></a>
-                      <br>
-                      <%= post.message %>
-                      <br>
+                      <a href="/posts/<%= post.id %>"><strong><%= post.title %></strong></a><br>
+                      <%= post.message %><br>
                       <small>
                         <% if post.comments.count > 0 %>
                           <a class="media-active-toggler">View Comments</a> ·

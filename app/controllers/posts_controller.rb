@@ -36,14 +36,8 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @page = params.fetch(:page, 0).to_i
-  #   @posts = Post.all.order("created_at DESC").offset(@page * POSTS_PER_PAGE).limit(POSTS_PER_PAGE)
     @post = Post.find(params[:id])
-  #
-  #   until @posts.include?(@post)
-  #     @page += 1
-  #   end
-  #
-  #   redirect_to posts_path(page: @page)
+
   end
 
   # GET /posts/new
@@ -103,6 +97,6 @@ class PostsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def post_params
-      params.require(:post).permit(:message, :title, :image)
+      params.require(:post).permit(:message, :title)
     end
 end

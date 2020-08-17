@@ -4,7 +4,6 @@ class Post < ApplicationRecord
   belongs_to :member
 
   has_many :comments, dependent: :destroy
-  has_many :likes
-  has_one_attached :image
+  has_many :likes, dependent: :destroy
 
 end
