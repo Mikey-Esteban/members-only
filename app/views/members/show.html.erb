@@ -5,7 +5,8 @@
         <figure class="media-left">
           <p class="image is-128x128 member-profile-pic">
             <% if @member.avatar.attached? %>
-              <%= image_tag @member.avatar, :class => "is-rounded" %>
+              <% image = member_seeded_image?(@member) %>
+              <%= image_tag (image), :class => "is-rounded" %>
             <% else %>
               <img class="is-rounded" src="https://bulma.io/images/placeholders/128x128.png">
             <% end %>
@@ -101,7 +102,8 @@
                         <figure class="media-left">
                           <p class="image is-48x48">
                             <% if comment.member.avatar.attached? %>
-                              <%= image_tag comment.member.avatar, :class => "is-rounded" %>
+                              <% image = member_seeded_image?(comment.member) %>
+                              <%= image_tag (image), :class => "is-rounded" %>
                             <% else %>
                               <img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png">
                             <% end %>

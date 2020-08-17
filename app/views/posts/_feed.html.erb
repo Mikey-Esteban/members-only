@@ -7,7 +7,8 @@
       <figure class="media-left">
         <p class="image is-64x64">
           <% if current_member.avatar.attached? %>
-            <%= image_tag current_member.avatar, :class => "is-rounded" %>
+            <% image = member_seeded_image?(current_member) %>
+            <%= image_tag (image), :class => "is-rounded" %>
           <% else %>
             <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
           <% end %>
@@ -52,7 +53,8 @@
         <div class="media-left <%= current_member.favorited?(post.member) ? 'button-is-following' : 'button-not-following' %>">
           <figure class="image is-64x64">
             <% if post.member.avatar.attached? %>
-              <%= image_tag post.member.avatar, :class => "is-rounded" %>
+              <% image = member_seeded_image?(post.member) %>
+              <%= image_tag (image), :class => "is-rounded" %>
             <% else %>
               <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
             <% end %>
@@ -175,7 +177,8 @@
                             <figure class="media-left">
                               <p class="image is-48x48">
                                 <% if comment.member.avatar.attached? %>
-                                  <%= image_tag comment.member.avatar, :class => "is-rounded" %>
+                                  <% image = member_seeded_image?(comment.member) %>
+                                  <%= image_tag (image), :class => "is-rounded" %>
                                 <% else %>
                                   <img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png">
                                 <% end %>

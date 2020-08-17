@@ -4,6 +4,14 @@ module ApplicationHelper
      hash = hash.sort_by {|k,v| v}.reverse
   end
 
+  def member_seeded_image?(current_member)
+    if current_member.email[0..3] == 'user'
+      return current_member.email[0..4]
+    else
+      reutrn current_member.avatar
+    end
+  end
+
   def member_liked_data(current_member)
     list = current_member.all_favorited
     data = { :liked_posts => [], :following => [] }
@@ -56,24 +64,6 @@ module ApplicationHelper
 
     return descend_sort(data).take(3)
   end
-
-  # def most_active_member(members)
-  #   members_scores = {}
-  #   members.each do |member|
-  #     members_scores[member.name] = [member, member.favoritor_total[:favorite]]
-  #   end
-  #   # @posts.each do |post|
-  #   #   post.comments.each do |comment|
-  #   #     to_add = comment.member.name
-  #   #     members_scores[to_add][1] += 1
-  #   #   end
-  #   # end
-  #   @comments.each do |comment|
-  #     members_scores[comment.member.name][1] += 1
-  #   end
-  #
-  #   return descend_sort(members_scores).take(3)
-  # end
 
   def top_posts
     data = {}
