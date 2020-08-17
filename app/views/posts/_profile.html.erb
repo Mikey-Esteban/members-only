@@ -14,7 +14,8 @@
       <div>
         <p class="image is-64x64">
           <% if current_member.avatar.attached? %>
-            <%= image_tag current_member.avatar, :class => "is-rounded" %>
+            <% image = member_seeded_image?(current_member) %>
+            <%= image_tag (image), :class => "is-rounded" %>
           <% else %>
             <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
           <% end %>
