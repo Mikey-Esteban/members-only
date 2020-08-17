@@ -45,7 +45,7 @@
     </div>
     <div class="followers-tags tags tags-active">
       <% followers.each do |follower| %>
-        <a class="tag is-black is-rounded" href="#"><%= follower.name %></a>
+        <a class="tag is-black is-rounded" href="/members/<%= follower.id %>"><%= follower.name %></a>
       <% end %>
     </div>
     <div class="following-tags tags tags-active">
