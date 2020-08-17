@@ -1,9 +1,9 @@
-console.log("follow tag RAN")
+// console.log("follow tag RAN")
 
 const follow_tags = document.querySelectorAll(".follow-tag")
 
 follow_tags.forEach((follow_tag) => {
-  console.log(follow_tag)
+  // console.log(follow_tag)
   follow_tag.onclick = () => {
     if ( follow_tag.classList.contains('is-light') ) {
       follow_tag.classList.toggle('is-light')

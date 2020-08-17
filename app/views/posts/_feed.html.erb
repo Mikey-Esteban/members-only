@@ -29,7 +29,12 @@
 </div>
 <% end %>
   <% @posts.each do |post|  %>
-    <div class="box">
+
+    <% if @highlight_id.to_i == post.id.to_i %>
+    <div class="box highlight" id="<%= post.id %>">
+    <% else %>
+    <div class="box" id="<%= post.id %>">
+    <% end %>
       <article class="media">
         <% if member_signed_in? %>
           <div class="media-left <%= current_member.favorited?(post.member) ? 'button-is-following' : 'button-not-following' %>">

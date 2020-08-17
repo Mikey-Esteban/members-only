@@ -32,6 +32,8 @@
     <h2 class="subtitle trending-title">Top Posts</h2>
     <% data.each do |post| %>
       <div class="notification is-light">
+        <% data = find_post_page(post) %>
+        <%= link_to "go to", posts_path(page: data, highlight_id: post[0].id) %>
         <a class="trending-link" href="posts/<%= post[0].id %>">
           "<%= post[0].title %>"
         </a>

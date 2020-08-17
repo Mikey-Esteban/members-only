@@ -1,4 +1,4 @@
-console.log('LOADED THE like comments script');
+// console.log('LOADED THE like comments script');
 
 // const tagsDivs = document.querySelectorAll(".tags");
 const postsDivs = document.querySelectorAll(".content")

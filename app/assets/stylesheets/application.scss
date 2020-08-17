@@ -24,6 +24,16 @@
  @import "bulma";
  @import "font-awesome";
 
+.highlight {
+  border-color: hsl(171, 100%, 41%);
+  // background-color: white;
+  border-radius: 6px;
+  box-shadow: 0 0.5em 1em -0.125em hsl(171, 100%, 41%), 0 0px 0 1px hsl(171, 100%, 41%);
+  color: #4a4a4a;
+  display: block;
+  padding: 1.25rem;
+}
+
 .button-is-following {
   padding-right: 16px;
 }

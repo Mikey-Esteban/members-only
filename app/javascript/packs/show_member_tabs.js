@@ -1,4 +1,4 @@
-console.log('show member liked posts RAN');
+// console.log('show member liked posts RAN');
 
 
 const liked_posts_tab = document.querySelector(".liked-posts-tab")

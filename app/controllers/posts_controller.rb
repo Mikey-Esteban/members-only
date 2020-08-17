@@ -26,6 +26,8 @@ class PostsController < ApplicationController
 
     @post = Post.new
 
+    @highlight_id = params[:highlight_id]
+
     @members = Member.all
     @comments = Comment.all
   end
@@ -33,7 +35,15 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @page = params.fetch(:page, 0).to_i
+  #   @posts = Post.all.order("created_at DESC").offset(@page * POSTS_PER_PAGE).limit(POSTS_PER_PAGE)
     @post = Post.find(params[:id])
+  #
+  #   until @posts.include?(@post)
+  #     @page += 1
+  #   end
+  #
+  #   redirect_to posts_path(page: @page)
   end
 
   # GET /posts/new
