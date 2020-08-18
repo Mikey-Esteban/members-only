@@ -6,12 +6,7 @@
   <article class="media box">
       <figure class="media-left">
         <p class="image is-64x64">
-          <% if current_member.avatar.attached? %>
-            <% image = member_seeded_image?(current_member) %>
-            <%= image_tag (image), :class => "is-rounded" %>
-          <% else %>
-            <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
-          <% end %>
+          <%= image_tag member_seeded_image?(current_member), :class => "is-rounded" %>
         </p>
       </figure>
       <div class="media-content">
@@ -52,12 +47,7 @@
       <% if member_signed_in? %>
         <div class="media-left <%= current_member.favorited?(post.member) ? 'button-is-following' : 'button-not-following' %>">
           <figure class="image is-64x64">
-            <% if post.member.avatar.attached? %>
-              <% image = member_seeded_image?(post.member) %>
-              <%= image_tag (image), :class => "is-rounded" %>
-            <% else %>
-              <img class="is-rounded" src="https://bulma.io/images/placeholders/64x64.png">
-            <% end %>
+            <%= image_tag member_seeded_image?(post.member), :class => "is-rounded" %>
           </figure>
           <% unless current_member == post.member %>
             <%= link_to toggle_follow_post_path(post), method: :post, remote: true, :class => "level-item post-buttons" do %>
@@ -176,12 +166,7 @@
                           <article class="media">
                             <figure class="media-left">
                               <p class="image is-48x48">
-                                <% if comment.member.avatar.attached? %>
-                                  <% image = member_seeded_image?(comment.member) %>
-                                  <%= image_tag (image), :class => "is-rounded" %>
-                                <% else %>
-                                  <img class="is-rounded" src="https://bulma.io/images/placeholders/48x48.png">
-                                <% end %>
+                                <%= image_tag member_seeded_image?(comment.member), :class => "is-rounded" %>
                               </p>
                             </figure>
                             <div class="media-content">

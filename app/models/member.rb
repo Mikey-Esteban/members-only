@@ -1,6 +1,9 @@
 class Member < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
+  include Gravtastic
+  gravtastic
+
   acts_as_favoritable
   acts_as_favoritor
 
@@ -10,6 +13,5 @@ class Member < ApplicationRecord
   has_many :posts, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :likes, dependent: :destroy
-  has_one_attached :avatar, dependent: :destroy
 
 end
