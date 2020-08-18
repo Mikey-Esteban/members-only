@@ -8,7 +8,9 @@
         <article class="media">
           <figure class="media-left">
             <p class="image is-32x32">
-              <%= image_tag member_seeded_image?(member[0]), :class => "is-rounded" %>
+              <a href="/members/<%= member[0].id %>">
+                <%= image_tag member_seeded_image?(member[0]), :class => "is-rounded" %>
+              </a>
             </p>
           </figure>
           <div class="media-content">

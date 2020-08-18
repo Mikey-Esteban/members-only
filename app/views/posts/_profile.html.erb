@@ -13,7 +13,9 @@
     <div class="card-content">
       <div>
         <p class="image is-64x64">
-          <%= image_tag member_seeded_image?(current_member), :class => "is-rounded" %>
+          <a href="members/<%= current_member.id %>">
+            <%= image_tag member_seeded_image?(current_member), :class => "is-rounded" %>
+          </a>
         </p>
       </div>
       <div>

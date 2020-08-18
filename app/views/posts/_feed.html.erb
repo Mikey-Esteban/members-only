@@ -6,7 +6,9 @@
   <article class="media box">
       <figure class="media-left">
         <p class="image is-64x64">
-          <%= image_tag member_seeded_image?(current_member), :class => "is-rounded" %>
+          <a href="/members/<%= current_member.id %>">
+            <%= image_tag member_seeded_image?(current_member), :class => "is-rounded" %>
+          </a>
         </p>
       </figure>
       <div class="media-content">
@@ -47,7 +49,9 @@
       <% if member_signed_in? %>
         <div class="media-left <%= current_member.favorited?(post.member) ? 'button-is-following' : 'button-not-following' %>">
           <figure class="image is-64x64">
-            <%= image_tag member_seeded_image?(post.member), :class => "is-rounded" %>
+            <a href="members/<%= post.member.id %>">
+              <%= image_tag member_seeded_image?(post.member), :class => "is-rounded" %>
+            </a>
           </figure>
           <% unless current_member == post.member %>
             <%= link_to toggle_follow_post_path(post), method: :post, remote: true, :class => "level-item post-buttons" do %>
@@ -161,8 +165,8 @@
                   <div class="dropdown-menu" id="dropdown-menu" role="menu">
                     <div class="dropdown-content">
                       <% post.comments.each do |comment| %>
-                      <a href="#" class="dropdown-item">
-                        <% if comment.member %>
+                      <% if comment.member %>
+                        <a href="/members/<%= comment.member.id %>" class="dropdown-item">
                           <article class="media">
                             <figure class="media-left">
                               <p class="image is-48x48">
@@ -185,8 +189,8 @@
                             <% data = find_post_page([post]) %>
                             <small><%= link_to "delete", post_comment_path(id: comment.id, post_id: post.id, page: data), method: :delete, :class => "comment-delete-button", data: {confirm: "delete comment?"} %></small>
                           <% end %>
-                        <% end %>
-                      </a>
+                        </a>
+                      <% end %>
                       <% end %>
                     </div>
                   </div>
